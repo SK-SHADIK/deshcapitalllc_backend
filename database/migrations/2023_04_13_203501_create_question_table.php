@@ -13,22 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('appointments', function (Blueprint $table) {
+        Schema::create('question', function (Blueprint $table) {
             $table->id();
             $table->string('name', 255);
-            $table->string('email', 255);
-            $table->string('phone', 255);
-            $table->date('date');
-            $table->time('time');
-            $table->unsignedBigInteger('appointment_reason_id');
-            $table->text('description');
+            $table->text('question');
             $table->boolean('is_active')->default(true);
             $table->string('cb', 255)->nullable();
             $table->timestamp('cd')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->string('ub', 255)->nullable();
             $table->timestamp('ud')->default(DB::raw('CURRENT_TIMESTAMP'));
             
-            $table->foreign('appointment_reason_id')->references('id')->on('appointment_reason');
+            
             
         });
     }
@@ -40,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('appointments');
+        Schema::dropIfExists('question');
     }
 };

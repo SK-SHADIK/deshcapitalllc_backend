@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('ub', 255)->nullable();
             $table->timestamp('ud')->default(DB::raw('CURRENT_TIMESTAMP'));
 
+
         });
     }
 

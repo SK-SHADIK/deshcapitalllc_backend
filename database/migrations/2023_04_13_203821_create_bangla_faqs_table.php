@@ -13,16 +13,19 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('feedback', function (Blueprint $table) {
+        Schema::create('bangla_faqs', function (Blueprint $table) {
             $table->id();
             $table->string('name', 255);
-            $table->text('feedback');
+            $table->text('question');
+            $table->text('answer');
             $table->boolean('is_active')->default(true);
             $table->string('cb', 255)->nullable();
             $table->timestamp('cd')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->string('ub', 255)->nullable();
             $table->timestamp('ud')->default(DB::raw('CURRENT_TIMESTAMP'));
-
+            
+            
+            
         });
     }
 
@@ -33,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('feedback');
+        Schema::dropIfExists('bangla_faqs');
     }
 };
