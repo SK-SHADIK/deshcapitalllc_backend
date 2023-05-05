@@ -7,5 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class FeedbackModel extends Model
 {
-    use HasFactory;
+    protected $table = "feedback";
+    const CREATED_AT = 'cd';
+    const UPDATED_AT = 'ud';
 }

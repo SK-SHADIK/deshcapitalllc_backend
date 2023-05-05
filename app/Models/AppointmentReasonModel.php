@@ -7,5 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class AppointmentReasonModel extends Model
 {
-    use HasFactory;
+    protected $table = "appointment_reason";
+    const CREATED_AT = 'cd';
+    const UPDATED_AT = 'ud';
 }

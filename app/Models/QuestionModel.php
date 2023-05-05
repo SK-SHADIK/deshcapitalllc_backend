@@ -7,5 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class QuestionModel extends Model
 {
-    use HasFactory;
+    protected $table = "question";
+    const CREATED_AT = 'cd';
+    const UPDATED_AT = 'ud';
 }

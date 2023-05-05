@@ -7,5 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class AdminModel extends Model
 {
-    use HasFactory;
+    protected $table = "admin";
+    const CREATED_AT = 'cd';
+    const UPDATED_AT = 'ud';
 }

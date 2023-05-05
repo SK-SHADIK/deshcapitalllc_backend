@@ -7,5 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class SuperAdminModel extends Model
 {
-    use HasFactory;
+    protected $table = "super_admin";
+    const CREATED_AT = 'cd';
+    const UPDATED_AT = 'ud';
 }

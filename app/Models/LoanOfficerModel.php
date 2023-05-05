@@ -7,5 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class LoanOfficerModel extends Model
 {
-    use HasFactory;
+    protected $table = "loan_officer";
+    const CREATED_AT = 'cd';
+    const UPDATED_AT = 'ud';
 }
