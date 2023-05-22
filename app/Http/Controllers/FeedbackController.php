@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\FeedbackModel;
+use App\Http\Middleware\APIAuth;
+
 
 use DB;
 
@@ -45,7 +47,7 @@ class FeedbackController extends Controller
         DB::insert($query, [$name, $feedback, $active]);
     
     
-        return response()->json(["msg" => "Successfully Data Added"]);
+        return response()->json(["msg" => "Successfully Data Added"], 200);
     }
 
     // ----- Show Single Feedback Function -----
@@ -85,7 +87,7 @@ class FeedbackController extends Controller
     
         DB::update($query, $parameters);
 
-        return response()->json(["msg"=>"Successfully Data Updated"]);
+        return response()->json(["msg"=>"Successfully Data Updated"], 200);
     }
 
     // ----- Deactivate Feedback Function -----
@@ -96,7 +98,7 @@ class FeedbackController extends Controller
         $parameters = ['id' => $id];
         DB::update($query, $parameters);
 
-        return response()->json(["msg"=>"Successfully Data Deactivate"]);
+        return response()->json(["msg"=>"Successfully Data Deactivate"], 200);
     
     }
 
@@ -108,7 +110,7 @@ class FeedbackController extends Controller
         $parameters = ['id' => $id];
         DB::update($query, $parameters);
 
-        return response()->json(["msg"=>"Successfully Data Activate"]);
+        return response()->json(["msg"=>"Successfully Data Activate"], 200);
     
     }
 
@@ -122,7 +124,7 @@ class FeedbackController extends Controller
     
         DB::delete($query, $parameters);
 
-        return response()->json(["msg"=>"Successfully Data Deleted"]);
+        return response()->json(["msg"=>"Successfully Data Deleted"], 200);
 
     }
     
@@ -133,7 +135,7 @@ class FeedbackController extends Controller
     
         DB::delete($query);
 
-        return response()->json(["msg"=>"Successfully All Data Deleted"]);
+        return response()->json(["msg"=>"Successfully All Data Deleted"], 200);
 
     }
 

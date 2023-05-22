@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\QuestionModel;
+use App\Http\Middleware\APIAuth;
 use DB;
 
 class QuestionController extends Controller

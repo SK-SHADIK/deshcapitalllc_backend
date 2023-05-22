@@ -56,7 +56,7 @@ class Registration extends Controller
         $email = $request['email'];
         $contact_number = $request['contact_number'];
         $address = $request['address'];
-        $password = $request['password'];
+        $password = md5($request['password']);
         $confirm_password = $request['confirm_password'];
         $nmls = $request['nmls'];
         $user_type = $request['user_type'];
@@ -66,16 +66,16 @@ class Registration extends Controller
             $query = "INSERT INTO clients (client_id, first_name, last_name, email,     contact_number, address, password, is_active) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             DB::insert($query, [$client_id, $first_name, $last_name, $email, $contact_number,  $address, $password, $active]);
     
-            return response()->json(["msg" => "Client Created Successfully"]);
+            return response()->json(["msg" => "Client Created Successfully"], 200);
         }
         elseif ($user_type == 'Loan_officer') {
             $query = "INSERT INTO loan_officer (loan_officer_id, first_name, last_name, email, contact_number, address, password, nmls, is_active) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             DB::insert($query, [$client_id, $first_name, $last_name, $email, $contact_number,  $address, $password, $nmls, $active]);
     
-            return response()->json(["msg" => "Loan Officer Created Successfully"]);
+            return response()->json(["msg" => "Loan Officer Created Successfully"], 200);
         }
         else{
-            return response()->json(["msg" => "Something Went Wrong!!! Please Try Again."]);
+            return response()->json(["msg" => "Something Went Wrong!!! Please Try Again."], 422);
         }
     }
 

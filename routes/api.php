@@ -3,8 +3,10 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FeedbackController;
-use App\Http\Controllers\Registration;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\Registration;
+use App\Http\Controllers\Login;
+use App\Http\Middleware\APIAuth;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,11 +27,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/registration', [Registration::class,'Registrations']);
 
 // ------- Login -------
-
+Route::post('/login',[Login::class,'login']);
 
 
 // ------- Feedback -------
-Route::get('/feedbacks', [FeedbackController::class,'showFeedbacks']);
+Route::get('/feedbacks', [FeedbackController::class,'showFeedbacks'])->middleware('APIAuth');
 Route::post('/createFeedback', [FeedbackController::class,'createFeedback']);
 Route::get('/showSingleFeedback/{id}', [FeedbackController::class,'showSingleFeedback']);
 Route::post('/updateFeedback', [FeedbackController::class,'updateFeedback']);
@@ -39,7 +41,7 @@ Route::get('/removeSingleFeedback/{id}', [FeedbackController::class,'removeSingl
 Route::get('/removeAllFeedbacks', [FeedbackController::class,'removeAllFeedback']);
 
 // ------- Question -------
-Route::get('/questions', [QuestionController::class,'showQuestions']);
+Route::get('/questions', [QuestionController::class,'showQuestions'])->middleware('APIAuth');
 Route::post('/createQuestion', [QuestionController::class,'createQuestion']);
 Route::get('/showSingleQuestion/{id}', [QuestionController::class,'showSingleQuestion']);
 Route::post('/updateQuestion', [QuestionController::class,'updateQuestion']);
