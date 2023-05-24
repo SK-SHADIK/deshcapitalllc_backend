@@ -15,7 +15,7 @@ use DB;
 class Login extends Controller
 {
     //
-    function login(Request $request){
+    public function login(Request $request){
 
         $validator = Validator::make($request->all(),[
             'email'=>"required",
@@ -72,11 +72,20 @@ class Login extends Controller
         }
 
     }
-    function loginUserInfo(Request $request, $token){
+    protected function loginUserInfo(Request $request, $token){
         $userData = Token::where('token_key', '=', $request->token)->whereNULL('expired_at')->first();
         if($userData){
             return response()->json([$userData]);
         }
         return response()->json([$userData]);
+    }
+    public function logout(Request $req)
+    {
+        $key = $req->token;
+        if($key){
+            $tk = Token::where("token_key", "=", $key)->first();
+            $tk->expired_at = new Datetime();
+            $tk->save();
+        }
     }
 }

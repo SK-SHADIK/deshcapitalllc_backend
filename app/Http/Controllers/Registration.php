@@ -14,8 +14,6 @@ class Registration extends Controller
     {
         $validator = Validator::make($request->all(),
             [
-                "client_id" => "required|sometimes",
-                "loan_officer_id" => "required|sometimes",
                 "first_name" => "required|regex:/^[a-zA-Z.]+$/",
                 "last_name" => "required|regex:/^[a-zA-Z.]+$/",
                 "email" => "required|unique:clients,email|unique:loan_officer,email|regex:/^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,3}$/",
@@ -26,8 +24,6 @@ class Registration extends Controller
                 "nmls"=>"sometimes|required",
             ],
             [
-                "client_id.required" => "Please provide your name!!!",
-                "loan_officer_id.required" => "Please provide your name!!!",
                 "first_name.required" => "Please provide your first name!!!",
                 "first_name.regex" => "Numbers and Symbols are not accepted!!!",
                 "last_name.required" => "Please provide your last name!!!",
@@ -49,8 +45,29 @@ class Registration extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
-    
-        $client_id = $request['client_id'];
+
+        // Create Customized Client ID
+        $lastClientId = DB::table('clients')->orderBy('client_id', 'desc')->first();
+        
+        if ($lastClientId) {
+            $lastIdClient = substr($lastClientId->client_id, 4);
+            $newClientId = 'DLCC' . str_pad($lastIdClient + 1, 5, '0', STR_PAD_LEFT);
+        } else {
+            $newClientId = 'DLCC00000';
+        }
+        
+        // Create Customized Loan Officer ID
+        $lastLoanOfficerId = DB::table('loan_officer')->orderBy('loan_officer_id', 'desc')->first();
+        
+        if ($lastLoanOfficerId) {
+            $lastIdLoanOfficer = substr($lastLoanOfficerId->loan_officer_id, 5);
+            $newLoanOfficerId = 'DLCLO' . str_pad($lastIdLoanOfficer + 1, 5, '0', STR_PAD_LEFT);
+        } else {
+            $newLoanOfficerId = 'DLCLO00000';
+        }
+        
+        $client_id = $newClientId;
+        $loan_officer_id = $newLoanOfficerId;
         $first_name = $request['first_name'];
         $last_name = $request['last_name'];
         $email = $request['email'];
@@ -61,20 +78,18 @@ class Registration extends Controller
         $nmls = $request['nmls'];
         $user_type = $request['user_type'];
         $active = $request['is_active'];
-    
+        
         if ($user_type == 'Client') {
-            $query = "INSERT INTO clients (client_id, first_name, last_name, email,     contact_number, address, password, is_active) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            $query = "INSERT INTO clients (client_id, first_name, last_name, email, contact_number, address, password, is_active) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             DB::insert($query, [$client_id, $first_name, $last_name, $email, $contact_number,  $address, $password, $active]);
-    
+        
             return response()->json(["msg" => "Client Created Successfully"], 200);
-        }
-        elseif ($user_type == 'Loan_officer') {
+        } elseif ($user_type == 'Loan_officer') {
             $query = "INSERT INTO loan_officer (loan_officer_id, first_name, last_name, email, contact_number, address, password, nmls, is_active) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            DB::insert($query, [$client_id, $first_name, $last_name, $email, $contact_number,  $address, $password, $nmls, $active]);
-    
+            DB::insert($query, [$loan_officer_id, $first_name, $last_name, $email, $contact_number, $address, $password, $nmls, $active]);
+        
             return response()->json(["msg" => "Loan Officer Created Successfully"], 200);
-        }
-        else{
+        } else {
             return response()->json(["msg" => "Something Went Wrong!!! Please Try Again."], 422);
         }
     }

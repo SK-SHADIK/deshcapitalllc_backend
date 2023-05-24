@@ -27,13 +27,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/registration', [Registration::class,'Registrations']);
 
 // ------- Login -------
-Route::post('/login',[Login::class,'login']);
+Route::post('/login', [Login::class,'login']);
+Route::post('/logout', [Login::class,'logout']);
 
 
 // ------- Feedback -------
 Route::get('/feedbacks', [FeedbackController::class,'showFeedbacks'])->middleware('APIAuth');
 Route::post('/createFeedback', [FeedbackController::class,'createFeedback']);
-Route::get('/showSingleFeedback/{id}', [FeedbackController::class,'showSingleFeedback']);
+Route::get('/showSingleFeedback/{id}', [FeedbackController::class,'showSingleFeedback'])->middleware('APIAuth');
 Route::post('/updateFeedback', [FeedbackController::class,'updateFeedback']);
 Route::get('/deactivateFeedback/{id}', [FeedbackController::class,'deactivateFeedback']);
 Route::get('/activateFeedback/{id}', [FeedbackController::class,'activateFeedback']);
