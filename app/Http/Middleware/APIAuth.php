@@ -23,7 +23,7 @@ class APIAuth
             $query = "SELECT * FROM tokens WHERE token_key = ? AND expired_at IS NULL LIMIT 1;";
             $key = DB::select($query, [$token]);
             
-            if ($key) {
+            if ($key == null) {
                 return $next($request);
             } else {
                 return response()->json(["msg" => "Supplied Token Is Invalid or Expired!!! Please Login and Try Again."], 401);
