@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
-use App\Models\QuestionModel;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Middleware\APIAuth;
+use App\Models\QuestionModel;
 use DB;
 
 class QuestionController extends Controller
@@ -39,13 +39,14 @@ class QuestionController extends Controller
    
        $name = $request['name'];
        $question = $request['question'];
-       $active = $request['is_active'];
+       $active = $request->has('is_active') ? $request['is_active'] : true;
+
    
        $query = "INSERT INTO question (name, question, is_active) VALUES (?, ?, ?)";
        DB::insert($query, [$name, $question, $active]);
    
    
-       return response()->json(["msg" => "Successfully Data Added"]);
+       return response()->json(["msg" => "Successfully Data Added"], 200);
    }
 
    // ----- Show Single Question Function -----
@@ -79,13 +80,13 @@ class QuestionController extends Controller
        $parameters = [
            'name' => $request->name,
            'question' => $request->question,
-           'is_active' => $request->is_active,
+           'is_active' => $request->has('is_active') ? $request->is_active : true,
            'id' => $request->id
        ];
    
        DB::update($query, $parameters);
 
-       return response()->json(["msg"=>"Successfully Data Updated"]);
+       return response()->json(["msg"=>"Successfully Data Updated"], 200);
    }
 
    // ----- Deactivate Question Function -----
@@ -96,7 +97,7 @@ class QuestionController extends Controller
        $parameters = ['id' => $id];
        DB::update($query, $parameters);
 
-       return response()->json(["msg"=>"Successfully Data Deactivate"]);
+       return response()->json(["msg"=>"Successfully Data Deactivate"], 200);
    
    }
 
@@ -108,7 +109,7 @@ class QuestionController extends Controller
        $parameters = ['id' => $id];
        DB::update($query, $parameters);
 
-       return response()->json(["msg"=>"Successfully Data Activate"]);
+       return response()->json(["msg"=>"Successfully Data Activate"], 200);
    
    }
 
@@ -122,7 +123,7 @@ class QuestionController extends Controller
    
        DB::delete($query, $parameters);
 
-       return response()->json(["msg"=>"Successfully Data Deleted"]);
+       return response()->json(["msg"=>"Successfully Data Deleted"], 200);
 
    }
    
@@ -133,7 +134,20 @@ class QuestionController extends Controller
    
        DB::delete($query);
 
-       return response()->json(["msg"=>"Successfully All Data Deleted"]);
+       return response()->json(["msg"=>"Successfully All Data Deleted"], 200);
 
+   }
+
+   // ----- Search Question by Name Function -----
+   public function searchQuestionByName(Request $request)
+   {
+       $name = $request->input('name');
+   
+       $query = "SELECT * FROM question WHERE name LIKE :name";
+       $parameters = ['name' => '%' . $name . '%'];
+   
+       $questions = DB::select($query, $parameters);
+   
+       return response()->json($questions);
    }
 }

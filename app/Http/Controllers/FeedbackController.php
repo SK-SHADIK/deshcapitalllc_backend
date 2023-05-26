@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
-use App\Models\FeedbackModel;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Middleware\APIAuth;
-
-
+use App\Models\FeedbackModel;
 use DB;
 
 class FeedbackController extends Controller
@@ -41,7 +39,8 @@ class FeedbackController extends Controller
     
         $name = $request['name'];
         $feedback = $request['feedback'];
-        $active = $request['is_active'];
+        $active = $request->has('is_active') ? $request['is_active'] : true;
+
     
         $query = "INSERT INTO feedback (name, feedback, is_active) VALUES (?, ?, ?)";
         DB::insert($query, [$name, $feedback, $active]);
@@ -81,7 +80,7 @@ class FeedbackController extends Controller
         $parameters = [
             'name' => $request->name,
             'feedback' => $request->feedback,
-            'is_active' => $request->is_active,
+            'is_active' => $request->has('is_active') ? $request->is_active : true,
             'id' => $request->id
         ];
     
@@ -139,4 +138,16 @@ class FeedbackController extends Controller
 
     }
 
+    // ----- Search Feedback by Name Function -----
+    public function searchFeedbackByName(Request $request)
+    {
+        $name = $request->input('name');
+    
+        $query = "SELECT * FROM feedback WHERE name LIKE :name";
+        $parameters = ['name' => '%' . $name . '%'];
+    
+        $feedbacks = DB::select($query, $parameters);
+    
+        return response()->json($feedbacks);
+    }
 }
