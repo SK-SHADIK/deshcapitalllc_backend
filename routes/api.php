@@ -12,7 +12,6 @@ use App\Http\Controllers\FaqsController;
 use App\Http\Controllers\BanglaFaqsController;
 use App\Http\Controllers\ContactusController;
 use App\Http\Controllers\AppointmentReasonController;
-use App\Http\Middleware\APIAuth;
 
 /*
 |--------------------------------------------------------------------------
