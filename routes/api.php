@@ -11,6 +11,7 @@ use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\FaqsController;
 use App\Http\Controllers\BanglaFaqsController;
 use App\Http\Controllers\ContactusController;
+use App\Http\Controllers\AppointmentsController;
 use App\Http\Controllers\AppointmentReasonController;
 
 /*
@@ -106,3 +107,15 @@ Route::get('/activate-appointment-reason/{id}', [AppointmentReasonController::cl
 Route::get('/remove-single-appointment-reason/{id}', [AppointmentReasonController::class,'removeSingleAppointmentReason'])->middleware('APIAuth');
 Route::get('/remove-all-appointment-reason', [AppointmentReasonController::class,'removeAllAppointmentReason'])->middleware('APIAuth');
 Route::post('/search-appointment-reason-by-name', [AppointmentReasonController::class,'searchAppointmentReasonByName'])->middleware('APIAuth');
+
+
+// ------- Appointment -------
+Route::get('/appointments', [AppointmentsController::class,'showAppointments'])->middleware('APIAuth');
+Route::post('/create-appointment', [AppointmentsController::class,'createAppointment'])->middleware('APIAuth');
+Route::get('/show-single-appointment/{id}', [AppointmentsController::class,'showSingleAppointment'])->middleware('APIAuth');
+Route::post('/update-appointment', [AppointmentsController::class,'updateAppointment'])->middleware('APIAuth');
+Route::get('/deactivate-appointment/{id}', [AppointmentsController::class,'deactivateAppointment'])->middleware('APIAuth');
+Route::get('/activate-appointment/{id}', [AppointmentsController::class,'activateAppointment'])->middleware('APIAuth');
+Route::get('/remove-single-appointment/{id}', [AppointmentsController::class,'removeSingleAppointment'])->middleware('APIAuth');
+Route::get('/remove-all-appointment', [AppointmentsController::class,'removeAllAppointment'])->middleware('APIAuth');
+Route::post('/search-appointment-by-name', [AppointmentsController::class,'searchAppointmentByName'])->middleware('APIAuth');
