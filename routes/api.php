@@ -9,6 +9,7 @@ use App\Http\Controllers\Login;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\FaqsController;
+use App\Http\Controllers\BanglaFaqsController;
 use App\Http\Controllers\ContactusController;
 use App\Http\Middleware\APIAuth;
 
@@ -69,6 +70,18 @@ Route::get('/activate-faqs/{id}', [FaqsController::class,'activateFAQs'])->middl
 Route::get('/remove-single-faqs/{id}', [FaqsController::class,'removeSingleFAQs'])->middleware('APIAuth');
 Route::get('/remove-all-faqs', [FaqsController::class,'removeAllFAQs'])->middleware('APIAuth');
 Route::post('/search-faqs-by-name', [FaqsController::class,'searchFAQsByName'])->middleware('APIAuth');
+
+
+// ------- Bangla FAQs -------
+Route::get('/bangla-faqs', [BanglaFaqsController::class,'showBanglaFAQs'])->middleware('APIAuth');
+Route::post('/create-bangla-faqs', [BanglaFaqsController::class,'createBanglaFAQs'])->middleware('APIAuth');
+Route::get('/show-single-bangla-faqs/{id}', [BanglaFaqsController::class,'showSingleBanglaFAQs'])->middleware('APIAuth');
+Route::post('/update-bangla-faqs', [BanglaFaqsController::class,'updateBanglaFAQs'])->middleware('APIAuth');
+Route::get('/deactivate-bangla-faqs/{id}', [BanglaFaqsController::class,'deactivateBanglaFAQs'])->middleware('APIAuth');
+Route::get('/activate-bangla-faqs/{id}', [BanglaFaqsController::class,'activateBanglaFAQs'])->middleware('APIAuth');
+Route::get('/remove-single-bangla-faqs/{id}', [BanglaFaqsController::class,'removeSingleBanglaFAQs'])->middleware('APIAuth');
+Route::get('/remove-all-bangla-faqs', [BanglaFaqsController::class,'removeAllBanglaFAQs'])->middleware('APIAuth');
+Route::post('/search-bangla-faqs-by-name', [BanglaFaqsController::class,'searchBanglaFAQsByName'])->middleware('APIAuth');
 
 
 // ------- Contactus -------
