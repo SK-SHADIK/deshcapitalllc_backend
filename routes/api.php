@@ -8,6 +8,7 @@ use App\Http\Controllers\Login;
 
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\FaqsController;
 use App\Http\Controllers\ContactusController;
 use App\Http\Middleware\APIAuth;
 
@@ -36,35 +37,47 @@ Route::post('/logout', [Login::class,'logout'])->middleware('APIAuth');
 
 // ------- Feedback -------
 Route::get('/feedbacks', [FeedbackController::class,'showFeedbacks'])->middleware('APIAuth');
-Route::post('/createFeedback', [FeedbackController::class,'createFeedback'])->middleware('APIAuth');
-Route::get('/showSingleFeedback/{id}', [FeedbackController::class,'showSingleFeedback'])->middleware('APIAuth');
-Route::post('/updateFeedback', [FeedbackController::class,'updateFeedback'])->middleware('APIAuth');
-Route::get('/deactivateFeedback/{id}', [FeedbackController::class,'deactivateFeedback'])->middleware('APIAuth');
-Route::get('/activateFeedback/{id}', [FeedbackController::class,'activateFeedback'])->middleware('APIAuth');
-Route::get('/removeSingleFeedback/{id}', [FeedbackController::class,'removeSingleFeedback'])->middleware('APIAuth');
-Route::get('/removeAllFeedbacks', [FeedbackController::class,'removeAllFeedback'])->middleware('APIAuth');
-Route::post('/searchFeedbackByName', [FeedbackController::class,'searchFeedbackByName'])->middleware('APIAuth');
+Route::post('/create-feedback', [FeedbackController::class,'createFeedback'])->middleware('APIAuth');
+Route::get('/show-single-feedback/{id}', [FeedbackController::class,'showSingleFeedback'])->middleware('APIAuth');
+Route::post('/update-feedback', [FeedbackController::class,'updateFeedback'])->middleware('APIAuth');
+Route::get('/deactivate-feedback/{id}', [FeedbackController::class,'deactivateFeedback'])->middleware('APIAuth');
+Route::get('/activate-feedback/{id}', [FeedbackController::class,'activateFeedback'])->middleware('APIAuth');
+Route::get('/remove-single-feedback/{id}', [FeedbackController::class,'removeSingleFeedback'])->middleware('APIAuth');
+Route::get('/remove-all-feedbacks', [FeedbackController::class,'removeAllFeedback'])->middleware('APIAuth');
+Route::post('/search-feedback-by-name', [FeedbackController::class,'searchFeedbackByName'])->middleware('APIAuth');
 
 
 // ------- Question -------
 Route::get('/questions', [QuestionController::class,'showQuestions'])->middleware('APIAuth');
-Route::post('/createQuestion', [QuestionController::class,'createQuestion'])->middleware('APIAuth');
-Route::get('/showSingleQuestion/{id}', [QuestionController::class,'showSingleQuestion'])->middleware('APIAuth');
-Route::post('/updateQuestion', [QuestionController::class,'updateQuestion'])->middleware('APIAuth');
-Route::get('/deactivateQuestion/{id}', [QuestionController::class,'deactivateQuestion'])->middleware('APIAuth');
-Route::get('/activateQuestion/{id}', [QuestionController::class,'activateQuestion'])->middleware('APIAuth');
-Route::get('/removeSingleQuestion/{id}', [QuestionController::class,'removeSingleQuestion'])->middleware('APIAuth');
-Route::get('/removeAllQuestions', [QuestionController::class,'removeAllQuestion'])->middleware('APIAuth');
-Route::post('/searchQuestionByName', [QuestionController::class,'searchQuestionByName'])->middleware('APIAuth');
+Route::post('/create-question', [QuestionController::class,'createQuestion'])->middleware('APIAuth');
+Route::get('/show-single-question/{id}', [QuestionController::class,'showSingleQuestion'])->middleware('APIAuth');
+Route::post('/update-question', [QuestionController::class,'updateQuestion'])->middleware('APIAuth');
+Route::get('/deactivate-question/{id}', [QuestionController::class,'deactivateQuestion'])->middleware('APIAuth');
+Route::get('/activate-question/{id}', [QuestionController::class,'activateQuestion'])->middleware('APIAuth');
+Route::get('/remove-single-question/{id}', [QuestionController::class,'removeSingleQuestion'])->middleware('APIAuth');
+Route::get('/remove-all-questions', [QuestionController::class,'removeAllQuestion'])->middleware('APIAuth');
+Route::post('/search-question-by-name', [QuestionController::class,'searchQuestionByName'])->middleware('APIAuth');
+
+
+// ------- FAQs -------
+Route::get('/faqs', [FaqsController::class,'showFAQs'])->middleware('APIAuth');
+Route::post('/create-faqs', [FaqsController::class,'createFAQs'])->middleware('APIAuth');
+Route::get('/show-single-faqs/{id}', [FaqsController::class,'showSingleFAQs'])->middleware('APIAuth');
+Route::post('/update-faqs', [FaqsController::class,'updateFAQs'])->middleware('APIAuth');
+Route::get('/deactivate-faqs/{id}', [FaqsController::class,'deactivateFAQs'])->middleware('APIAuth');
+Route::get('/activate-faqs/{id}', [FaqsController::class,'activateFAQs'])->middleware('APIAuth');
+Route::get('/remove-single-faqs/{id}', [FaqsController::class,'removeSingleFAQs'])->middleware('APIAuth');
+Route::get('/remove-all-faqs', [FaqsController::class,'removeAllFAQs'])->middleware('APIAuth');
+Route::post('/search-faqs-by-name', [FaqsController::class,'searchFAQsByName'])->middleware('APIAuth');
 
 
 // ------- Contactus -------
 Route::get('/contactuss', [ContactusController::class,'showContactuss'])->middleware('APIAuth');
-Route::post('/createContactus', [ContactusController::class,'createContactus'])->middleware('APIAuth');
-Route::get('/showSingleContactus/{id}', [ContactusController::class,'showSingleContactus'])->middleware('APIAuth');
-Route::post('/updateContactus', [ContactusController::class,'updateContactus'])->middleware('APIAuth');
-Route::get('/deactivateContactus/{id}', [ContactusController::class,'deactivateContactus'])->middleware('APIAuth');
-Route::get('/activateContactus/{id}', [ContactusController::class,'activateContactus'])->middleware('APIAuth');
-Route::get('/removeSingleContactus/{id}', [ContactusController::class,'removeSingleContactus'])->middleware('APIAuth');
-Route::get('/removeAllContactus', [ContactusController::class,'removeAllContactus'])->middleware('APIAuth');
-Route::post('/searchContactusByName', [ContactusController::class,'searchContactusByName'])->middleware('APIAuth');
+Route::post('/create-contactus', [ContactusController::class,'createContactus'])->middleware('APIAuth');
+Route::get('/show-single-contactus/{id}', [ContactusController::class,'showSingleContactus'])->middleware('APIAuth');
+Route::post('/update-contactus', [ContactusController::class,'updateContactus'])->middleware('APIAuth');
+Route::get('/deactivate-contactus/{id}', [ContactusController::class,'deactivateContactus'])->middleware('APIAuth');
+Route::get('/activate-contactus/{id}', [ContactusController::class,'activateContactus'])->middleware('APIAuth');
+Route::get('/remove-single-contactus/{id}', [ContactusController::class,'removeSingleContactus'])->middleware('APIAuth');
+Route::get('/remove-all-contactus', [ContactusController::class,'removeAllContactus'])->middleware('APIAuth');
+Route::post('/search-contactus-by-name', [ContactusController::class,'searchContactusByName'])->middleware('APIAuth');
