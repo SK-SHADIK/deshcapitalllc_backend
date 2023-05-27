@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Middleware\APIAuth;
-use App\Models\QuestionModel;
+use App\Models\FaqsModel;
 use DB;
 
 class FaqsController extends Controller
