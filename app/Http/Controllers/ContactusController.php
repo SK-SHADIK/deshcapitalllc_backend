@@ -157,17 +157,21 @@ class ContactusController extends Controller
 
    }
 
-   // ----- Search Contactus by Name Function -----
+   // ----- Search Contactus by Name Or Email Or Phone Function -----
    public function searchContactusByName(Request $request)
-{
-    $searchTerm = $request->input('search');
-
-    $query = "SELECT * FROM contactus WHERE name LIKE :search OR email LIKE :search OR phone LIKE :search";
-    $parameters = ['search' => '%' . $searchTerm . '%'];
-
-    $contactus = DB::select($query, $parameters);
-
-    return response()->json($contactus);
-}
+    {
+        $searchTerm = $request->input('search');
+    
+        $query = "SELECT * FROM contactus WHERE name LIKE :name OR email LIKE :email OR phone LIKE :phone";
+        $parameters = [
+            'name' => '%' . $searchTerm . '%',
+            'email' => '%' . $searchTerm . '%',
+            'phone' => '%' . $searchTerm . '%',
+        ];
+    
+        $contactus = DB::select($query, $parameters);
+    
+        return response()->json($contactus);
+    }
 
 }
