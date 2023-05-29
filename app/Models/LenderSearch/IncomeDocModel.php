@@ -5,9 +5,9 @@ namespace App\Models\LenderSearch;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ImmigStatus extends Model
+class IncomeDocModel extends Model
 {
-    protected $table = "immig_status";
+    protected $table = "income_doc";
     const CREATED_AT = 'cd';
     const UPDATED_AT = 'ud';
 }

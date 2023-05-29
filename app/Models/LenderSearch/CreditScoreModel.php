@@ -5,9 +5,9 @@ namespace App\Models\LenderSearch;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Amortization extends Model
+class CreditScoreModel extends Model
 {
-    protected $table = "amortization";
+    protected $table = "credit_score";
     const CREATED_AT = 'cd';
     const UPDATED_AT = 'ud';
 }

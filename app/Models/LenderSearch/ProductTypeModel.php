@@ -5,9 +5,9 @@ namespace App\Models\LenderSearch;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class State extends Model
+class ProductTypeModel extends Model
 {
-    protected $table = "state";
+    protected $table = "product_type";
     const CREATED_AT = 'cd';
     const UPDATED_AT = 'ud';
 }
