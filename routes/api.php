@@ -16,6 +16,7 @@ use App\Http\Controllers\AppointmentReasonController;
 
 use App\Http\Controllers\LenderSearch\Amortization;
 use App\Http\Controllers\LenderSearch\Challenges;
+use App\Http\Controllers\LenderSearch\CreditScore;
 
 /*
 |--------------------------------------------------------------------------
@@ -149,3 +150,15 @@ Route::get('/activate-challenges/{id}', [Challenges::class,'activateChallenges']
 Route::get('/remove-single-challenges/{id}', [Challenges::class,'removeSingleChallenges'])->middleware('APIAuth');
 Route::get('/remove-all-challenges', [Challenges::class,'removeAllChallenges'])->middleware('APIAuth');
 Route::post('/search-challenges-by-name', [Challenges::class,'searchChallengesByName'])->middleware('APIAuth');
+
+
+// ------- Credit Score -------
+Route::get('/credit-score', [CreditScore::class,'showCreditScore'])->middleware('APIAuth');
+Route::post('/create-credit-score', [CreditScore::class,'createCreditScore'])->middleware('APIAuth');
+Route::get('/show-single-credit-score/{id}', [CreditScore::class,'showSingleCreditScore'])->middleware('APIAuth');
+Route::post('/update-credit-score', [CreditScore::class,'updateCreditScore'])->middleware('APIAuth');
+Route::get('/deactivate-credit-score/{id}', [CreditScore::class,'deactivateCreditScore'])->middleware('APIAuth');
+Route::get('/activate-credit-score/{id}', [CreditScore::class,'activateCreditScore'])->middleware('APIAuth');
+Route::get('/remove-single-credit-score/{id}', [CreditScore::class,'removeSingleCreditScore'])->middleware('APIAuth');
+Route::get('/remove-all-credit-score', [CreditScore::class,'removeAllCreditScore'])->middleware('APIAuth');
+Route::post('/search-credit-score-by-name', [CreditScore::class,'searchCreditScoreByName'])->middleware('APIAuth');
