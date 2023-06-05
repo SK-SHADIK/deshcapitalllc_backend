@@ -14,6 +14,8 @@ use App\Http\Controllers\ContactusController;
 use App\Http\Controllers\AppointmentsController;
 use App\Http\Controllers\AppointmentReasonController;
 
+use App\Http\Controllers\LenderSearch\Amortization;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -119,3 +121,18 @@ Route::get('/activate-appointment/{id}', [AppointmentsController::class,'activat
 Route::get('/remove-single-appointment/{id}', [AppointmentsController::class,'removeSingleAppointment'])->middleware('APIAuth');
 Route::get('/remove-all-appointment', [AppointmentsController::class,'removeAllAppointment'])->middleware('APIAuth');
 Route::post('/search-appointment-by-name', [AppointmentsController::class,'searchAppointmentByName'])->middleware('APIAuth');
+
+
+// ------- Lender Search -------
+
+
+// ------- Amortization -------
+Route::get('/amortizations', [Amortization::class,'showAmortizations'])->middleware('APIAuth');
+Route::post('/create-amortization', [Amortization::class,'createAmortization'])->middleware('APIAuth');
+Route::get('/show-single-amortization/{id}', [Amortization::class,'showSingleAmortization'])->middleware('APIAuth');
+Route::post('/update-amortization', [Amortization::class,'updateAmortization'])->middleware('APIAuth');
+Route::get('/deactivate-amortization/{id}', [Amortization::class,'deactivateAmortization'])->middleware('APIAuth');
+Route::get('/activate-amortization/{id}', [Amortization::class,'activateAmortization'])->middleware('APIAuth');
+Route::get('/remove-single-amortization/{id}', [Amortization::class,'removeSingleAmortization'])->middleware('APIAuth');
+Route::get('/remove-all-amortization', [Amortization::class,'removeAllAmortization'])->middleware('APIAuth');
+Route::post('/search-amortization-by-name', [Amortization::class,'searchAmortizationByName'])->middleware('APIAuth');
