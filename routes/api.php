@@ -15,6 +15,7 @@ use App\Http\Controllers\AppointmentsController;
 use App\Http\Controllers\AppointmentReasonController;
 
 use App\Http\Controllers\LenderSearch\Amortization;
+use App\Http\Controllers\LenderSearch\Challenges;
 
 /*
 |--------------------------------------------------------------------------
@@ -136,3 +137,15 @@ Route::get('/activate-amortization/{id}', [Amortization::class,'activateAmortiza
 Route::get('/remove-single-amortization/{id}', [Amortization::class,'removeSingleAmortization'])->middleware('APIAuth');
 Route::get('/remove-all-amortization', [Amortization::class,'removeAllAmortization'])->middleware('APIAuth');
 Route::post('/search-amortization-by-name', [Amortization::class,'searchAmortizationByName'])->middleware('APIAuth');
+
+
+// ------- Challenges -------
+Route::get('/challenges', [Challenges::class,'showChallenges'])->middleware('APIAuth');
+Route::post('/create-challenges', [Challenges::class,'createChallenges'])->middleware('APIAuth');
+Route::get('/show-single-challenges/{id}', [Challenges::class,'showSingleChallenges'])->middleware('APIAuth');
+Route::post('/update-challenges', [Challenges::class,'updateChallenges'])->middleware('APIAuth');
+Route::get('/deactivate-challenges/{id}', [Challenges::class,'deactivateChallenges'])->middleware('APIAuth');
+Route::get('/activate-challenges/{id}', [Challenges::class,'activateChallenges'])->middleware('APIAuth');
+Route::get('/remove-single-challenges/{id}', [Challenges::class,'removeSingleChallenges'])->middleware('APIAuth');
+Route::get('/remove-all-challenges', [Challenges::class,'removeAllChallenges'])->middleware('APIAuth');
+Route::post('/search-challenges-by-name', [Challenges::class,'searchChallengesByName'])->middleware('APIAuth');
