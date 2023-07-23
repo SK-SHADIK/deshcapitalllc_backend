@@ -5,21 +5,21 @@ namespace App\Http\Controllers\LenderSearch;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Models\LenderSearch\AmortizationModel;
+use App\Models\LenderSearch\StateModel;
 use DB;
 
-class Amortization extends Controller
+class StateController extends Controller
 {
-    // ----- Show All Amortization Function -----
-   public function showAmortizations()
+    // ----- Show All State Function -----
+   public function showStates()
    {
-       $query = "SELECT * FROM amortization;";
-       $amortizations = DB::select($query);
-       return response()->json($amortizations);
+       $query = "SELECT * FROM state;";
+       $State = DB::select($query);
+       return response()->json($State);
    }
 
-   // ----- Create Amortization Function -----
-   public function createAmortization(Request $request)
+   // ----- Create State Function -----
+   public function createState(Request $request)
    {
        $validator = Validator::make($request->all(),
             [
@@ -39,23 +39,23 @@ class Amortization extends Controller
        $active = $request->has('is_active') ? $request['is_active'] : true;
 
    
-       $query = "INSERT INTO amortization (name, is_active) VALUES (?, ?)";
+       $query = "INSERT INTO state (name, is_active) VALUES (?, ?)";
        DB::insert($query, [$name, $active]);
    
    
        return response()->json(["msg" => "Successfully Data Added"], 200);
    }
 
-   // ----- Show Single Amortization Function -----
-   public function showSingleAmortization($id)
+   // ----- Show Single State Function -----
+   public function showSingleState($id)
    {
-       $query = "SELECT * FROM amortization WHERE id = :id";
+       $query = "SELECT * FROM state WHERE id = :id";
        $data = DB::select($query, ['id' => $id]);
        return response()->json($data);
    }
 
-   // ----- After Edit Store Amortization Function -----
-   public function updateAmortization(Request $request)
+   // ----- After Edit Store State Function -----
+   public function updateState(Request $request)
    {
        
        $validator = Validator::make($request->all(),
@@ -71,7 +71,7 @@ class Amortization extends Controller
        {
            return response()->json($validator->errors(), 422);
        }
-       $query = "UPDATE amortization SET name = :name, is_active = :is_active WHERE id = :id";
+       $query = "UPDATE state SET name = :name, is_active = :is_active WHERE id = :id";
        $parameters = [
            'name' => $request->name,
            'is_active' => $request->has('is_active') ? $request->is_active : true,
@@ -83,11 +83,11 @@ class Amortization extends Controller
        return response()->json(["msg"=>"Successfully Data Updated"], 200);
    }
 
-   // ----- Deactivate Amortization Function -----
-   public function deactivateAmortization(Request $request)
+   // ----- Deactivate State Function -----
+   public function deactivateState(Request $request)
    {
        $id = $request->id;
-       $query = "UPDATE amortization SET is_active = 0 WHERE id = :id";
+       $query = "UPDATE state SET is_active = 0 WHERE id = :id";
        $parameters = ['id' => $id];
        DB::update($query, $parameters);
 
@@ -95,11 +95,11 @@ class Amortization extends Controller
    
    }
 
-   // ----- Activate Amortization Function -----
-   public function activateAmortization(Request $request)
+   // ----- Activate State Function -----
+   public function activateState(Request $request)
    {
        $id = $request->id;
-       $query = "UPDATE amortization SET is_active = 1 WHERE id = :id";
+       $query = "UPDATE state SET is_active = 1 WHERE id = :id";
        $parameters = ['id' => $id];
        DB::update($query, $parameters);
 
@@ -107,12 +107,12 @@ class Amortization extends Controller
    
    }
 
-   // ----- Delete Single Amortization Function -----
-   public function removeSingleAmortization(Request $request)
+   // ----- Delete Single State Function -----
+   public function removeSingleState(Request $request)
    {
        $id = $request->id;
 
-       $query = "DELETE FROM amortization WHERE id = :id";
+       $query = "DELETE FROM state WHERE id = :id";
        $parameters = ['id' => $id];
    
        DB::delete($query, $parameters);
@@ -121,10 +121,10 @@ class Amortization extends Controller
 
    }
    
-   // ----- Delete All Amortization Function -----
-   public function removeAllAmortization()
+   // ----- Delete All State Function -----
+   public function removeAllState()
    {
-       $query = "DELETE FROM amortization";
+       $query = "DELETE FROM state";
    
        DB::delete($query);
 
@@ -132,16 +132,16 @@ class Amortization extends Controller
 
    }
 
-   // ----- Search Amortization by Name Function -----
-   public function searchAmortizationByName(Request $request)
+   // ----- Search State by Name Function -----
+   public function searchStateByName(Request $request)
    {
        $name = $request->input('name');
    
-       $query = "SELECT * FROM amortization WHERE name LIKE :name";
+       $query = "SELECT * FROM state WHERE name LIKE :name";
        $parameters = ['name' => '%' . $name . '%'];
    
-       $amortizations = DB::select($query, $parameters);
+       $State = DB::select($query, $parameters);
    
-       return response()->json($amortizations);
+       return response()->json($State);
    }
 }

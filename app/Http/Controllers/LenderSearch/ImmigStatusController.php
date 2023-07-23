@@ -5,21 +5,21 @@ namespace App\Http\Controllers\LenderSearch;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Models\LenderSearch\CreditScoreModel;
+use App\Models\LenderSearch\ImmigStatusModel;
 use DB;
 
-class CreditScore extends Controller
+class ImmigStatusController extends Controller
 {
-    // ----- Show All Credit Score Function -----
-   public function showCreditScore()
+    // ----- Show All Immig Status Function -----
+   public function showImmigStatus()
    {
-       $query = "SELECT * FROM credit_score;";
-       $creditScore = DB::select($query);
-       return response()->json($creditScore);
+       $query = "SELECT * FROM immig_status;";
+       $immigStatus = DB::select($query);
+       return response()->json($immigStatus);
    }
 
-   // ----- Create Credit Score Function -----
-   public function createCreditScore(Request $request)
+   // ----- Create Immig Status Function -----
+   public function createImmigStatus(Request $request)
    {
        $validator = Validator::make($request->all(),
             [
@@ -39,23 +39,23 @@ class CreditScore extends Controller
        $active = $request->has('is_active') ? $request['is_active'] : true;
 
    
-       $query = "INSERT INTO credit_score (name, is_active) VALUES (?, ?)";
+       $query = "INSERT INTO immig_status (name, is_active) VALUES (?, ?)";
        DB::insert($query, [$name, $active]);
    
    
        return response()->json(["msg" => "Successfully Data Added"], 200);
    }
 
-   // ----- Show Single Credit Score Function -----
-   public function showSingleCreditScore($id)
+   // ----- Show Single Immig Status Function -----
+   public function showSingleImmigStatus($id)
    {
-       $query = "SELECT * FROM credit_score WHERE id = :id";
+       $query = "SELECT * FROM immig_status WHERE id = :id";
        $data = DB::select($query, ['id' => $id]);
        return response()->json($data);
    }
 
-   // ----- After Edit Store Credit Score Function -----
-   public function updateCreditScore(Request $request)
+   // ----- After Edit Store Immig Status Function -----
+   public function updateImmigStatus(Request $request)
    {
        
        $validator = Validator::make($request->all(),
@@ -71,7 +71,7 @@ class CreditScore extends Controller
        {
            return response()->json($validator->errors(), 422);
        }
-       $query = "UPDATE credit_score SET name = :name, is_active = :is_active WHERE id = :id";
+       $query = "UPDATE immig_status SET name = :name, is_active = :is_active WHERE id = :id";
        $parameters = [
            'name' => $request->name,
            'is_active' => $request->has('is_active') ? $request->is_active : true,
@@ -83,11 +83,11 @@ class CreditScore extends Controller
        return response()->json(["msg"=>"Successfully Data Updated"], 200);
    }
 
-   // ----- Deactivate Credit Score Function -----
-   public function deactivateCreditScore(Request $request)
+   // ----- Deactivate Immig Status Function -----
+   public function deactivateImmigStatus(Request $request)
    {
        $id = $request->id;
-       $query = "UPDATE credit_score SET is_active = 0 WHERE id = :id";
+       $query = "UPDATE immig_status SET is_active = 0 WHERE id = :id";
        $parameters = ['id' => $id];
        DB::update($query, $parameters);
 
@@ -95,11 +95,11 @@ class CreditScore extends Controller
    
    }
 
-   // ----- Activate Credit Score Function -----
-   public function activateCreditScore(Request $request)
+   // ----- Activate Immig Status Function -----
+   public function activateImmigStatus(Request $request)
    {
        $id = $request->id;
-       $query = "UPDATE credit_score SET is_active = 1 WHERE id = :id";
+       $query = "UPDATE immig_status SET is_active = 1 WHERE id = :id";
        $parameters = ['id' => $id];
        DB::update($query, $parameters);
 
@@ -107,12 +107,12 @@ class CreditScore extends Controller
    
    }
 
-   // ----- Delete Single Credit Score Function -----
-   public function removeSingleCreditScore(Request $request)
+   // ----- Delete Single Immig Status Function -----
+   public function removeSingleImmigStatus(Request $request)
    {
        $id = $request->id;
 
-       $query = "DELETE FROM credit_score WHERE id = :id";
+       $query = "DELETE FROM immig_status WHERE id = :id";
        $parameters = ['id' => $id];
    
        DB::delete($query, $parameters);
@@ -121,10 +121,10 @@ class CreditScore extends Controller
 
    }
    
-   // ----- Delete All Credit Score Function -----
-   public function removeAllCreditScore()
+   // ----- Delete All Immig Status Function -----
+   public function removeAllImmigStatus()
    {
-       $query = "DELETE FROM credit_score";
+       $query = "DELETE FROM immig_status";
    
        DB::delete($query);
 
@@ -132,16 +132,16 @@ class CreditScore extends Controller
 
    }
 
-   // ----- Search Credit Score by Name Function -----
-   public function searchCreditScoreByName(Request $request)
+   // ----- Search Immig Status by Name Function -----
+   public function searchImmigStatusByName(Request $request)
    {
        $name = $request->input('name');
    
-       $query = "SELECT * FROM credit_score WHERE name LIKE :name";
+       $query = "SELECT * FROM immig_status WHERE name LIKE :name";
        $parameters = ['name' => '%' . $name . '%'];
    
-       $creditScore = DB::select($query, $parameters);
+       $immigStatus = DB::select($query, $parameters);
    
-       return response()->json($creditScore);
+       return response()->json($immigStatus);
    }
 }

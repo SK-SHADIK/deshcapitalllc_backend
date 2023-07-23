@@ -5,21 +5,21 @@ namespace App\Http\Controllers\LenderSearch;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Models\LenderSearch\ChallengesModel;
+use App\Models\LenderSearch\AmortizationModel;
 use DB;
 
-class Challenges extends Controller
+class AmortizationController extends Controller
 {
-    // ----- Show All Challenges Function -----
-   public function showChallenges()
+    // ----- Show All Amortization Function -----
+   public function showAmortizations()
    {
-       $query = "SELECT * FROM challenges;";
-       $challenges = DB::select($query);
-       return response()->json($challenges);
+       $query = "SELECT * FROM amortization;";
+       $amortizations = DB::select($query);
+       return response()->json($amortizations);
    }
 
-   // ----- Create Challenges Function -----
-   public function createChallenges(Request $request)
+   // ----- Create Amortization Function -----
+   public function createAmortization(Request $request)
    {
        $validator = Validator::make($request->all(),
             [
@@ -39,23 +39,23 @@ class Challenges extends Controller
        $active = $request->has('is_active') ? $request['is_active'] : true;
 
    
-       $query = "INSERT INTO challenges (name, is_active) VALUES (?, ?)";
+       $query = "INSERT INTO amortization (name, is_active) VALUES (?, ?)";
        DB::insert($query, [$name, $active]);
    
    
        return response()->json(["msg" => "Successfully Data Added"], 200);
    }
 
-   // ----- Show Single Challenges Function -----
-   public function showSingleChallenges($id)
+   // ----- Show Single Amortization Function -----
+   public function showSingleAmortization($id)
    {
-       $query = "SELECT * FROM challenges WHERE id = :id";
+       $query = "SELECT * FROM amortization WHERE id = :id";
        $data = DB::select($query, ['id' => $id]);
        return response()->json($data);
    }
 
-   // ----- After Edit Store Challenges Function -----
-   public function updateChallenges(Request $request)
+   // ----- After Edit Store Amortization Function -----
+   public function updateAmortization(Request $request)
    {
        
        $validator = Validator::make($request->all(),
@@ -71,7 +71,7 @@ class Challenges extends Controller
        {
            return response()->json($validator->errors(), 422);
        }
-       $query = "UPDATE challenges SET name = :name, is_active = :is_active WHERE id = :id";
+       $query = "UPDATE amortization SET name = :name, is_active = :is_active WHERE id = :id";
        $parameters = [
            'name' => $request->name,
            'is_active' => $request->has('is_active') ? $request->is_active : true,
@@ -83,11 +83,11 @@ class Challenges extends Controller
        return response()->json(["msg"=>"Successfully Data Updated"], 200);
    }
 
-   // ----- Deactivate Challenges Function -----
-   public function deactivateChallenges(Request $request)
+   // ----- Deactivate Amortization Function -----
+   public function deactivateAmortization(Request $request)
    {
        $id = $request->id;
-       $query = "UPDATE challenges SET is_active = 0 WHERE id = :id";
+       $query = "UPDATE amortization SET is_active = 0 WHERE id = :id";
        $parameters = ['id' => $id];
        DB::update($query, $parameters);
 
@@ -95,11 +95,11 @@ class Challenges extends Controller
    
    }
 
-   // ----- Activate Challenges Function -----
-   public function activateChallenges(Request $request)
+   // ----- Activate Amortization Function -----
+   public function activateAmortization(Request $request)
    {
        $id = $request->id;
-       $query = "UPDATE challenges SET is_active = 1 WHERE id = :id";
+       $query = "UPDATE amortization SET is_active = 1 WHERE id = :id";
        $parameters = ['id' => $id];
        DB::update($query, $parameters);
 
@@ -107,12 +107,12 @@ class Challenges extends Controller
    
    }
 
-   // ----- Delete Single Challenges Function -----
-   public function removeSingleChallenges(Request $request)
+   // ----- Delete Single Amortization Function -----
+   public function removeSingleAmortization(Request $request)
    {
        $id = $request->id;
 
-       $query = "DELETE FROM challenges WHERE id = :id";
+       $query = "DELETE FROM amortization WHERE id = :id";
        $parameters = ['id' => $id];
    
        DB::delete($query, $parameters);
@@ -121,10 +121,10 @@ class Challenges extends Controller
 
    }
    
-   // ----- Delete All Challenges Function -----
-   public function removeAllChallenges()
+   // ----- Delete All Amortization Function -----
+   public function removeAllAmortization()
    {
-       $query = "DELETE FROM challenges";
+       $query = "DELETE FROM amortization";
    
        DB::delete($query);
 
@@ -132,16 +132,16 @@ class Challenges extends Controller
 
    }
 
-   // ----- Search Challenges by Name Function -----
-   public function searchChallengesByName(Request $request)
+   // ----- Search Amortization by Name Function -----
+   public function searchAmortizationByName(Request $request)
    {
        $name = $request->input('name');
    
-       $query = "SELECT * FROM challenges WHERE name LIKE :name";
+       $query = "SELECT * FROM amortization WHERE name LIKE :name";
        $parameters = ['name' => '%' . $name . '%'];
    
-       $challenges = DB::select($query, $parameters);
+       $amortizations = DB::select($query, $parameters);
    
-       return response()->json($challenges);
+       return response()->json($amortizations);
    }
 }
