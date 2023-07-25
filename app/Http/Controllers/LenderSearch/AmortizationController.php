@@ -113,11 +113,19 @@ class AmortizationController extends Controller
             if ($validator->fails()) {
                 return response()->json($validator->errors(), 422);
             }
+
+            $id = $request->id;
+            $amortization = DB::table('amortization')->where('id', $id)->first();
+
+            if (!$amortization) {
+                return response()->json(["error" => "Data Not Found!!!"], 404);
+            }
+
             $query = "UPDATE amortization SET name = :name, is_active = :is_active WHERE id = :id";
             $parameters = [
                 'name' => $request->name,
                 'is_active' => $request->has('is_active') ? $request->is_active : true,
-                'id' => $request->id
+                'id' => $id
             ];
 
             DB::update($query, $parameters);
@@ -125,7 +133,7 @@ class AmortizationController extends Controller
             Log::info('Successfully Data Updated.');
             return response()->json(["msg" => "Successfully Data Updated"], 200);
 
-        } catch (QueryException $e) {
+        } catch (QueryException $ex) {
             Log::error(__FILE__ . ' || Line ' . __LINE__ . ' || ' . $ex->getMessage() . ' || ' . $ex->getCode());
             return response()->json(["error" => "Database Error Occurred!!! Please Try Again."], 500);
         } catch (Exception $ex) {
@@ -257,6 +265,7 @@ class AmortizationController extends Controller
             Log::info('Successfully Data Retrieved.');
 
             return response()->json($amortizations);
+
         } catch (QueryException $ex) {
             Log::error(__FILE__ . ' || Line ' . __LINE__ . ' || ' . $ex->getMessage() . ' || ' . $ex->getCode());
             return response()->json(["error" => "Database Error Occurred!!! Please Try Again."], 500);
