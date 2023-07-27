@@ -44,10 +44,10 @@ class ClientsController extends Controller
                 [
                     "first_name" => "required|regex:/^[a-zA-Z.]+$/",
                     "last_name" => "required|regex:/^[a-zA-Z.]+$/",
-                    "email" => "required|unique:clients,email|unique:loan_officer,email|regex:/^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,3}$/",
+                    "email" => "required|unique:clients,email|regex:/^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,3}$/",
                     "contact_number" => "required",
                     "address" => "required",
-                    "password" => "required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/",
+                    "password" => "required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/",
                 ],
                 [
                     "first_name.required" => "Please provide your first name!!!",
@@ -61,7 +61,7 @@ class ClientsController extends Controller
                     "address.required" => "Please provide your address!!!",
                     "password.required" => "Please provide your password!!!",
                     'password.min' => "Password must contain minimum 8 character",
-                    'password.regex' => "Also password must contain upper case, lower case, number and special characters (Not use the #)",
+                    'password.regex' => "Also password must contain upper case, lower case, number and special characters"
                 ]
             );
             if ($validator->fails()) {
@@ -86,7 +86,7 @@ class ClientsController extends Controller
             $contact_number = $request['contact_number'];
             $address = $request['address'];
             $password = md5($request['password']);
-            $active = $request['is_active'];
+            $active = $request->has('is_active') ? $request['is_active'] : true;
 
             $query = "INSERT INTO clients (client_id, first_name, last_name, email, contact_number, address, password, is_active) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             DB::insert($query, [$client_id, $first_name, $last_name, $email, $contact_number, $address, $password, $active]);
@@ -135,7 +135,7 @@ class ClientsController extends Controller
                 [
                     "first_name" => "required|regex:/^[a-zA-Z.]+$/",
                     "last_name" => "required|regex:/^[a-zA-Z.]+$/",
-                    "email" => "required|unique:clients,email|unique:loan_officer,email|regex:/^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,3}$/",
+                    "email" => "required|regex:/^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,3}$/",
                     "contact_number" => "required",
                     "address" => "required",
                     "password" => "required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/",
@@ -147,7 +147,6 @@ class ClientsController extends Controller
                     "last_name.regex" => "Numbers and Symbols are not accepted!!!",
                     "email.required" => "Please provide your email!!!",
                     "email.regex" => "Please provide a valid mail!!!",
-                    "email.unique" => "The email already exists!!!",
                     "contact_number.required" => "Please provide your contact Number!!!",
                     "address.required" => "Please provide your address!!!",
                     "password.required" => "Please provide your password!!!",
@@ -304,8 +303,10 @@ class ClientsController extends Controller
         try {
             $searchTerm = $request->input('search');
 
-            $query = "SELECT * FROM clients WHERE email LIKE :email OR contact_number LIKE :contact_number OR client_id LIKE :client_id";
+            $query = "SELECT * FROM clients WHERE first_name LIKE :first_name OR last_name LIKE :last_name OR email LIKE :email OR contact_number LIKE :contact_number OR client_id LIKE :client_id";
             $parameters = [
+                'first_name' => '%' . $searchTerm . '%',
+                'last_name' => '%' . $searchTerm . '%',
                 'email' => '%' . $searchTerm . '%',
                 'contact_number' => '%' . $searchTerm . '%',
                 'client_id' => '%' . $searchTerm . '%',
