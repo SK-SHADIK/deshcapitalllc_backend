@@ -52,9 +52,9 @@ class Registration extends Controller
 
         if ($lastClientId) {
             $lastIdClient = substr($lastClientId->client_id, 4);
-            $newClientId = 'DLCC' . str_pad($lastIdClient + 1, 5, '0', STR_PAD_LEFT);
+            $newClientId = 'DCLC' . str_pad($lastIdClient + 1, 5, '0', STR_PAD_LEFT);
         } else {
-            $newClientId = 'DLCC00000';
+            $newClientId = 'DCLC00000';
         }
 
         // Create Customized Loan Officer ID
@@ -62,9 +62,9 @@ class Registration extends Controller
 
         if ($lastLoanOfficerId) {
             $lastIdLoanOfficer = substr($lastLoanOfficerId->loan_officer_id, 5);
-            $newLoanOfficerId = 'DLCLO' . str_pad($lastIdLoanOfficer + 1, 5, '0', STR_PAD_LEFT);
+            $newLoanOfficerId = 'DCLLO' . str_pad($lastIdLoanOfficer + 1, 5, '0', STR_PAD_LEFT);
         } else {
-            $newLoanOfficerId = 'DLCLO00000';
+            $newLoanOfficerId = 'DCLLO00000';
         }
 
         $client_id = $newClientId;

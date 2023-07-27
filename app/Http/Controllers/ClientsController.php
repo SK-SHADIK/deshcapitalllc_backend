@@ -73,9 +73,9 @@ class ClientsController extends Controller
 
             if ($lastClientId) {
                 $lastIdClient = substr($lastClientId->client_id, 4);
-                $newClientId = 'DLCC' . str_pad($lastIdClient + 1, 5, '0', STR_PAD_LEFT);
+                $newClientId = 'DCLC' . str_pad($lastIdClient + 1, 5, '0', STR_PAD_LEFT);
             } else {
-                $newClientId = 'DLCC00000';
+                $newClientId = 'DCLC00000';
             }
 
 

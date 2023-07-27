@@ -7,6 +7,7 @@ use App\Http\Controllers\Registration;
 use App\Http\Controllers\Login;
 
 use App\Http\Controllers\ClientsController;
+use App\Http\Controllers\LoanOfficerController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\FaqsController;
@@ -60,6 +61,17 @@ Route::get('/activate-client/{id}', [ClientsController::class, 'activateClient']
 Route::get('/remove-single-client/{id}', [ClientsController::class, 'removeSingleClient'])->middleware('APIAuth');
 Route::get('/remove-all-clients', [ClientsController::class, 'removeAllClient'])->middleware('APIAuth');
 Route::post('/search-client-by-name', [ClientsController::class, 'searchClientByName'])->middleware('APIAuth');
+
+// ------- Loan Officer -------
+Route::get('/loan-officer', [LoanOfficerController::class, 'showLoanOfficer'])->middleware('APIAuth');
+Route::post('/create-loan-officer', [LoanOfficerController::class, 'createLoanOfficer'])->middleware('APIAuth');
+Route::get('/show-single-loan-officer/{id}', [LoanOfficerController::class, 'showSingleLoanOfficer'])->middleware('APIAuth');
+Route::post('/update-loan-officer', [LoanOfficerController::class, 'updateLoanOfficer'])->middleware('APIAuth');
+Route::get('/deactivate-loan-officer/{id}', [LoanOfficerController::class, 'deactivateLoanOfficer'])->middleware('APIAuth');
+Route::get('/activate-loan-officer/{id}', [LoanOfficerController::class, 'activateLoanOfficer'])->middleware('APIAuth');
+Route::get('/remove-single-loan-officer/{id}', [LoanOfficerController::class, 'removeSingleLoanOfficer'])->middleware('APIAuth');
+Route::get('/remove-all-loan-officer', [LoanOfficerController::class, 'removeAllLoanOfficer'])->middleware('APIAuth');
+Route::post('/search-loan-officer-by-name', [LoanOfficerController::class, 'searchLoanOfficerByName'])->middleware('APIAuth');
 
 // ------- Feedback -------
 Route::get('/feedbacks', [FeedbackController::class, 'showFeedbacks'])->middleware('APIAuth');
