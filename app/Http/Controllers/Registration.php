@@ -12,7 +12,8 @@ class Registration extends Controller
     //
     public function Registrations(Request $request)
     {
-        $validator = Validator::make($request->all(),
+        $validator = Validator::make(
+            $request->all(),
             [
                 "first_name" => "required|regex:/^[a-zA-Z.]+$/",
                 "last_name" => "required|regex:/^[a-zA-Z.]+$/",
@@ -20,8 +21,8 @@ class Registration extends Controller
                 "contact_number" => "required",
                 "address" => "required",
                 "password" => "required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/",
-                "confirm_password"=>"required|same:password",
-                "nmls"=>"sometimes|required",
+                "confirm_password" => "required|same:password",
+                "nmls" => "sometimes|required",
             ],
             [
                 "first_name.required" => "Please provide your first name!!!",
@@ -34,38 +35,38 @@ class Registration extends Controller
                 "contact_number.required" => "Please provide your contact Number!!!",
                 "address.required" => "Please provide your address!!!",
                 "password.required" => "Please provide your password!!!",
-                'password.min'=>"Password must contain minimum 8 character",
-                'password.regex'=>"Also password must contain upper case, lower case, number and special characters",
+                'password.min' => "Password must contain minimum 8 character",
+                'password.regex' => "Also password must contain upper case, lower case, number and special characters",
                 "confirm_password.required" => "Please provide your confirm password!!!",
                 "confirm_password.same" => "The confirm password must match the password!",
                 "nmls.required" => "Please provide your nmls!!!",
             ]
         );
-    
+
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
 
         // Create Customized Client ID
         $lastClientId = DB::table('clients')->orderBy('client_id', 'desc')->first();
-        
+
         if ($lastClientId) {
             $lastIdClient = substr($lastClientId->client_id, 4);
             $newClientId = 'DLCC' . str_pad($lastIdClient + 1, 5, '0', STR_PAD_LEFT);
         } else {
             $newClientId = 'DLCC00000';
         }
-        
+
         // Create Customized Loan Officer ID
         $lastLoanOfficerId = DB::table('loan_officer')->orderBy('loan_officer_id', 'desc')->first();
-        
+
         if ($lastLoanOfficerId) {
             $lastIdLoanOfficer = substr($lastLoanOfficerId->loan_officer_id, 5);
             $newLoanOfficerId = 'DLCLO' . str_pad($lastIdLoanOfficer + 1, 5, '0', STR_PAD_LEFT);
         } else {
             $newLoanOfficerId = 'DLCLO00000';
         }
-        
+
         $client_id = $newClientId;
         $loan_officer_id = $newLoanOfficerId;
         $first_name = $request['first_name'];
@@ -78,16 +79,16 @@ class Registration extends Controller
         $nmls = $request['nmls'];
         $user_type = $request['user_type'];
         $active = $request['is_active'];
-        
+
         if ($user_type == 'Client') {
             $query = "INSERT INTO clients (client_id, first_name, last_name, email, contact_number, address, password, is_active) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-            DB::insert($query, [$client_id, $first_name, $last_name, $email, $contact_number,  $address, $password, $active]);
-        
+            DB::insert($query, [$client_id, $first_name, $last_name, $email, $contact_number, $address, $password, $active]);
+
             return response()->json(["msg" => "Client Created Successfully"], 200);
         } elseif ($user_type == 'Loan_officer') {
             $query = "INSERT INTO loan_officer (loan_officer_id, first_name, last_name, email, contact_number, address, password, nmls, is_active) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             DB::insert($query, [$loan_officer_id, $first_name, $last_name, $email, $contact_number, $address, $password, $nmls, $active]);
-        
+
             return response()->json(["msg" => "Loan Officer Created Successfully"], 200);
         } else {
             return response()->json(["msg" => "Something Went Wrong!!! Please Try Again."], 422);
