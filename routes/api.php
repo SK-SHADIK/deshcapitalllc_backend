@@ -13,6 +13,7 @@ use App\Http\Controllers\BanglaFaqsController;
 use App\Http\Controllers\ContactusController;
 use App\Http\Controllers\AppointmentsController;
 use App\Http\Controllers\AppointmentReasonController;
+use App\Http\Controllers\TodaysMortgageRateController;
 
 use App\Http\Controllers\LenderSearch\AmortizationController;
 use App\Http\Controllers\LenderSearch\ChallengesController;
@@ -101,6 +102,17 @@ Route::get('/activate-contactus/{id}', [ContactusController::class,'activateCont
 Route::get('/remove-single-contactus/{id}', [ContactusController::class,'removeSingleContactus'])->middleware('APIAuth');
 Route::get('/remove-all-contactus', [ContactusController::class,'removeAllContactus'])->middleware('APIAuth');
 Route::post('/search-contactus-by-name', [ContactusController::class,'searchContactusByName'])->middleware('APIAuth');
+
+// ------- Todays Mortgage Rate -------
+Route::get('/todays-mortgage-rates', [TodaysMortgageRateController::class,'showTodaysMortgageRates'])->middleware('APIAuth');
+Route::post('/create-todays-mortgage-rate', [TodaysMortgageRateController::class,'createTodaysMortgageRate'])->middleware('APIAuth');
+Route::get('/show-single-todays-mortgage-rate/{id}', [TodaysMortgageRateController::class,'showSingleTodaysMortgageRate'])->middleware('APIAuth');
+Route::post('/update-todays-mortgage-rate', [TodaysMortgageRateController::class,'updateTodaysMortgageRate'])->middleware('APIAuth');
+Route::get('/deactivate-todays-mortgage-rate/{id}', [TodaysMortgageRateController::class,'deactivateTodaysMortgageRate'])->middleware('APIAuth');
+Route::get('/activate-todays-mortgage-rate/{id}', [TodaysMortgageRateController::class,'activateTodaysMortgageRate'])->middleware('APIAuth');
+Route::get('/remove-single-todays-mortgage-rate/{id}', [TodaysMortgageRateController::class,'removeSingleTodaysMortgageRate'])->middleware('APIAuth');
+Route::get('/remove-all-todays-mortgage-rate', [TodaysMortgageRateController::class,'removeAllTodaysMortgageRate'])->middleware('APIAuth');
+Route::post('/search-todays-mortgage-rate-by-name', [TodaysMortgageRateController::class,'searchTodaysMortgageRateByName'])->middleware('APIAuth');
 
 // ------- Appointment Reason -------
 Route::get('/appointment-reasons', [AppointmentReasonController::class,'showAppointmentReasons'])->middleware('APIAuth');

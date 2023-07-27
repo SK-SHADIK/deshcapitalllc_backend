@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('name', 255);
             $table->string('current', 255);
-            $table->string('1day', 255);
-            $table->string('arrow', 255);
+            $table->string('day', 255);
+            $table->integer('arrow');
             $table->boolean('is_active')->default(true);
             $table->string('cb', 255)->nullable();
             $table->timestamp('cd')->default(DB::raw('CURRENT_TIMESTAMP'));
