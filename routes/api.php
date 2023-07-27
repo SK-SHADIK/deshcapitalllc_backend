@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Registration;
 use App\Http\Controllers\Login;
 
+use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\FaqsController;
@@ -47,6 +48,17 @@ Route::post('/registration', [Registration::class,'Registrations']);
 // ------- Login -------
 Route::post('/login', [Login::class,'login']);
 Route::post('/logout', [Login::class,'logout'])->middleware('APIAuth');
+
+// ------- Client -------
+Route::get('/clients', [ClientsController::class,'showClients'])->middleware('APIAuth');
+Route::post('/create-client', [ClientsController::class,'createClient'])->middleware('APIAuth');
+Route::get('/show-single-client/{id}', [ClientsController::class,'showSingleClient'])->middleware('APIAuth');
+Route::post('/update-client', [ClientsController::class,'updateClient'])->middleware('APIAuth');
+Route::get('/deactivate-client/{id}', [ClientsController::class,'deactivateClient'])->middleware('APIAuth');
+Route::get('/activate-client/{id}', [ClientsController::class,'activateClient'])->middleware('APIAuth');
+Route::get('/remove-single-client/{id}', [ClientsController::class,'removeSingleClient'])->middleware('APIAuth');
+Route::get('/remove-all-clients', [ClientsController::class,'removeAllClient'])->middleware('APIAuth');
+Route::post('/search-client-by-name', [ClientsController::class,'searchClientByName'])->middleware('APIAuth');
 
 // ------- Feedback -------
 Route::get('/feedbacks', [FeedbackController::class,'showFeedbacks'])->middleware('APIAuth');
