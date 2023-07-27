@@ -26,6 +26,7 @@ use App\Http\Controllers\LenderSearch\OccupancyController;
 use App\Http\Controllers\LenderSearch\ProductTypeController;
 use App\Http\Controllers\LenderSearch\PropertyTypeController;
 use App\Http\Controllers\LenderSearch\StateController;
+use App\Http\Controllers\LenderSearch\LenderSearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -259,3 +260,15 @@ Route::get('/activate-state/{id}', [StateController::class,'activateState'])->mi
 Route::get('/remove-single-state/{id}', [StateController::class,'removeSingleState'])->middleware('APIAuth');
 Route::get('/remove-all-state', [StateController::class,'removeAllState'])->middleware('APIAuth');
 Route::post('/search-state-by-name', [StateController::class,'searchStateByName'])->middleware('APIAuth');
+
+// ------- Lender Search -------
+Route::get('/lender-search', [LenderSearchController::class,'showLenderSearch'])->middleware('APIAuth');
+Route::post('/create-lender-search', [LenderSearchController::class,'createLenderSearch'])->middleware('APIAuth');
+Route::get('/show-single-lender-search/{id}', [LenderSearchController::class,'showSingleLenderSearch'])->middleware('APIAuth');
+Route::post('/update-lender-search', [LenderSearchController::class,'updateLenderSearch'])->middleware('APIAuth');
+Route::get('/deactivate-lender-search/{id}', [LenderSearchController::class,'deactivateLenderSearch'])->middleware('APIAuth');
+Route::get('/activate-lender-search/{id}', [LenderSearchController::class,'activateLenderSearch'])->middleware('APIAuth');
+Route::get('/remove-single-lender-search/{id}', [LenderSearchController::class,'removeSingleLenderSearch'])->middleware('APIAuth');
+Route::get('/remove-all-lender-search', [LenderSearchController::class,'removeAllLenderSearch'])->middleware('APIAuth');
+Route::post('/search-lender-search-by-name', [LenderSearchController::class,'searchLenderSearchByName'])->middleware('APIAuth');
+Route::get('/search-lender', [LenderSearchController::class,'searchLender'])->middleware('APIAuth');
