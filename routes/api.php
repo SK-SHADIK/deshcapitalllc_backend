@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Registration;
 use App\Http\Controllers\Login;
 
+use App\Http\Controllers\TokenController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\LoanOfficerController;
@@ -51,6 +52,13 @@ Route::post('/registration', [Registration::class, 'Registrations']);
 // ------- Login -------
 Route::post('/login', [Login::class, 'login']);
 Route::post('/logout', [Login::class, 'logout'])->middleware('APIAuth');
+
+// ------- Token -------
+Route::get('/tokens', [TokenController::class, 'showToken'])->middleware('APIAuth');
+Route::get('/show-single-token/{id}', [TokenController::class, 'showSingleToken'])->middleware('APIAuth');
+Route::get('/remove-single-token/{id}', [TokenController::class, 'removeSingleToken'])->middleware('APIAuth');
+Route::get('/remove-all-token', [TokenController::class, 'removeAllToken'])->middleware('APIAuth');
+Route::post('/search-token-by-name', [TokenController::class, 'searchTokenByName'])->middleware('APIAuth');
 
 // ------- Admin -------
 Route::get('/admins', [AdminController::class, 'showAdmins'])->middleware('APIAuth');
