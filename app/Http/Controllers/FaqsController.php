@@ -26,13 +26,7 @@ class FaqsController extends Controller
             Log::info('Successfully Data Retrieved.');
             return response()->json($faqs);
 
-        } catch (QueryException $e) {
-            Log::error(__FILE__ . ' || Line ' . __LINE__ . ' || ' . $ex->getMessage() . ' || ' . $ex->getCode());
-            return response()->json(["error" => "Database Error Occurred!!! Please Try Again."], 500);
-        } catch (Exception $ex) {
-            Log::error(__FILE__ . ' || Line ' . __LINE__ . ' || ' . $ex->getMessage() . ' || ' . $ex->getCode());
-            return response()->json(["error" => "An Unexpected Error Occurred!!! Please Try Again."], 500);
-        }
+       
     }
 
     // ----- Create Faqs Function -----
