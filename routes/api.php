@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Registration;
 use App\Http\Controllers\Login;
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\LoanOfficerController;
 use App\Http\Controllers\FeedbackController;
@@ -50,6 +51,17 @@ Route::post('/registration', [Registration::class, 'Registrations']);
 // ------- Login -------
 Route::post('/login', [Login::class, 'login']);
 Route::post('/logout', [Login::class, 'logout'])->middleware('APIAuth');
+
+// ------- Admin -------
+Route::get('/admins', [AdminController::class, 'showAdmins'])->middleware('APIAuth');
+Route::post('/create-admin', [AdminController::class, 'createAdmin'])->middleware('APIAuth');
+Route::get('/show-single-admin/{id}', [AdminController::class, 'showSingleAdmin'])->middleware('APIAuth');
+Route::post('/update-admin', [AdminController::class, 'updateAdmin'])->middleware('APIAuth');
+Route::get('/deactivate-admin/{id}', [AdminController::class, 'deactivateAdmin'])->middleware('APIAuth');
+Route::get('/activate-admin/{id}', [AdminController::class, 'activateAdmin'])->middleware('APIAuth');
+Route::get('/remove-single-admin/{id}', [AdminController::class, 'removeSingleAdmin'])->middleware('APIAuth');
+Route::get('/remove-all-admin', [AdminController::class, 'removeAllAdmin'])->middleware('APIAuth');
+Route::post('/search-admin-by-name', [AdminController::class, 'searchAdminByName'])->middleware('APIAuth');
 
 // ------- Client -------
 Route::get('/clients', [ClientsController::class, 'showClients'])->middleware('APIAuth');
